@@ -5,9 +5,8 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,40 +22,43 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Entity
-@Table(name = "Book_Info_Application")
-public class BookModel {
+@Data
+@Table(name = "AUTHOR_INFO_BOOKS")
+public class Author {
+	
 	@GeneratedValue(
 		    strategy = GenerationType.SEQUENCE,
-		    generator = "Book_Application"
+		    generator = "Book_Application_AUTHOR"
 		    
 		)
 		@SequenceGenerator(
-		    name = "Book_Application",
+		    name = "Book_Application_AUTHOR",
 		    allocationSize=1
 		)
 	
 	
-	
-	
 	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "BID")
-	private Integer id;
-	@Column(name = "BOOK_NAME")
-	private String bookName;
-	@Column(name = "BOOK_TITLE")
-	private String title;
-	@Column (name = "BOOK_PRICE")
-	private double price;
+	@Column(name = "AID")
+	private Integer aId;
+	@Column(name = "AUTHOR_FIRST_NAME")
+	private String firstName;
+	@Column(name = "AUTHOR_LAST_NAME")
+	private String lastName;
+	@Column(name = "AUTHOR_EMAIL")
+	private String email;
+	@Column(name = "AUTHOR_PHONE_NUMBER",length = 12)
+	private long phone;
+	@Column(name = "AUTHOR_LOCAL_LANGAUGE")
+	private String langauge;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private Author author;
+	@OneToOne(mappedBy = "author")
+	@JsonBackReference
+	private BookModel bookModel;
+	
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.DATE)
