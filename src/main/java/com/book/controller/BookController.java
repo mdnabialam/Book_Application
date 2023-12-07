@@ -32,7 +32,7 @@ public class BookController {
 			
 		}
 		
-		return ResponseEntity.of(Optional.of(list));
+		return ResponseEntity.status(HttpStatus.CREATED).body(list);
 	}
 	
 	// get find by ID
